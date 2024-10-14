@@ -8,6 +8,7 @@ import pandas as pd
 import plotly.graph_objs as go
 
 # Read the Excel file
+#new comment
 df_medication = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='newdata')
 df_surgery = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='data_surgery')
 df_alternative = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='alternative treatment')
