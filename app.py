@@ -4,12 +4,19 @@ import pandas as pd
 import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
 
+import os
+file_path = os.path.join(os.path.dirname(__file__), "QBUS5010 simulation data.xlsx")
+df_medication = pd.read_excel(file_path, sheet_name='newdata')
+df_surgery = pd.read_excel(file_path, sheet_name='data_surgery')
+df_alternative = pd.read_excel(file_path, sheet_name='alternative treatment')
+df_percentage = pd.read_excel(file_path, sheet_name='percentage')
 
-# Read the Excel file
-df_medication = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='newdata')
-df_surgery = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='data_surgery')
-df_alternative = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='alternative treatment')
-df_percentage = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='percentage')
+
+# # Read the Excel file
+# df_medication = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='newdata')
+# df_surgery = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='data_surgery')
+# df_alternative = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='alternative treatment')
+# df_percentage = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='percentage')
 
 # Initialize the Dash app
 app = Dash(external_stylesheets=[dbc.themes.CERULEAN],suppress_callback_exceptions=True)
