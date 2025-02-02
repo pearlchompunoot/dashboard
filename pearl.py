@@ -15,11 +15,11 @@ df_alternative = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='alte
 df_percentage = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='percentage')
 
 # Initialize the Dash app
-app1 = dash.Dash(__name__)
+app = dash.Dash(__name__)
 server = app.server
         
 #Layout
-app1.layout = html.Div([
+app.layout = html.Div([
 
     html.Div([
    # Part A: Search box 
@@ -91,7 +91,7 @@ app1.layout = html.Div([
 ])
 
 # Callback: Update search dropdown options based on treatment type
-@app1.callback(
+@app.callback(
     Output('search-dropdown', 'options'),
     Input('treatment-type-dropdown', 'value')
 )
@@ -103,7 +103,7 @@ def update_search_options(treatment_type):
     return [{'label': name, 'value': name} for name in disease_names]
 
 # Callback: Update table based on selected disease and treatment type
-@app1.callback(
+@app.callback(
     Output('medication-table', 'columns'),
     Output('medication-table', 'data'),
     Output('medication-table', 'row_selectable'),
@@ -170,7 +170,7 @@ def update_table(disease_name, treatment_type):
 
 
 # Callback: Display selected medication names
-@app1.callback(
+@app.callback(
     Output('selected-medication-names', 'children'),
     Input('medication-table', 'selected_rows'),
     State('medication-table', 'data'),
@@ -311,7 +311,7 @@ def display_selected_medications(selected_rows, data, treatment_type, disease_na
 )])
 
 #callback for percentage section
-@app1.callback(
+@app.callback(
     Output('area-for-display-percentage', 'children'),
     Input('medication-table', 'selected_rows'),
     State('medication-table', 'data'),
@@ -362,7 +362,7 @@ def update_percentage(selected_rows, data, treatment_type):
 
 
 # Callback: Display alternative treatment for the selected disease
-@app1.callback(
+@app.callback(
     Output('alternative-treatment-section', 'children'),
     Input('search-dropdown', 'value')
 )
@@ -391,7 +391,7 @@ def update_alternative_treatment(disease_name):
 
 # Run the application
 if __name__ == '__main__':
-    app1.run_server(debug=True)
+    app.run_server(debug=True)
 
 
 
