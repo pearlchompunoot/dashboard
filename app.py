@@ -1,4 +1,3 @@
-
 from dash import dcc, html, dash_table, Dash
 from dash.dependencies import Input, Output, State
 import pandas as pd
@@ -610,83 +609,6 @@ def update_selected_row_styles(selected_rows):
         
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
-
-
-].unique()
-    return [{'label': name, 'value': name} for name in disease_names]
-
-# Callback: Update table based on selected disease and treatment type
-@app.callback(
-    Output('medication-table', 'columns'),
-    Output('medication-table', 'data'),
-    Output('medication-table', 'row_selectable'),
-    Output('medication-table', 'selected_rows'),  # Reset selected rows
-    Input('search-dropdown', 'value'),
-    Input('treatment-type-dropdown', 'value')
-)
-def update_table(disease_name, treatment_type):
-    if not disease_name:
-        return [], [], 'multi', []  # Reset selected rows when no disease is selected
-
-    if treatment_type == 'medication':
-        filtered_df = df_medication[df_medication['disease_name'] == disease_name]
-        columns = [
-            {'name': 'Medication Name', 'id': 'medication_name'},
-            {'name': 'Dosage', 'id': 'dosage'},
-            {'name': 'Common Side Effect', 'id': 'common_side_effect'},
-            {'name': 'Rare Side Effect', 'id': 'common_side_effect_rare'},
-            {'name': 'Drug Interaction', 'id': 'drug_interaction'}
-        ]
-        
-        # Aggregate common and rare side effects
-        filtered_df['common_side_effect'] = filtered_df[['side_effect_common_1', 'side_effect_common_2', 
-                                                          'side_effect_common_3', 'side_effect_common_4']].apply(
-            lambda x: '/'.join(x.dropna().value_counts().nlargest(3).index), axis=1)
-        
-        rare_side_effects = filtered_df.groupby('medication_name')['side_effect_rare'].apply(
-            lambda x: '/'.join(x.dropna().value_counts().nlargest(2).index))
-        filtered_df['common_side_effect_rare'] = filtered_df['medication_name'].map(rare_side_effects)
-
-        # Randomly select a dosage for each medication
-        filtered_df['dosage'] = filtered_df.groupby('medication_name')['medication_dosage'].transform(
-            lambda x: x.sample(1).values[0])
-
-        # Remove duplicates
-        filtered_df = filtered_df.drop_duplicates(subset=['disease_name', 'medication_name'])
-
-    else:  # Treatment type: surgery
-        filtered_df = df_surgery[df_surgery['disease_name'] == disease_name]
-        columns = [
-            {'name': 'Surgery Name', 'id': 'medication_name'},
-            {'name': 'Common Side Effect', 'id': 'common_side_effect'},
-            {'name': 'Common Side Effect (Rare)', 'id': 'common_side_effect_rare'}
-        ]
-        
-        # Similar aggregation for surgery side effects
-        filtered_df['common_side_effect'] = filtered_df[['side_effect_common_1', 'side_effect_common_2', 
-                                                          'side_effect_common_3', 'side_effect_common_4']].apply(
-            lambda x: '/'.join(x.dropna().value_counts().nlargest(3).index), axis=1)
-
-        rare_side_effects = filtered_df.groupby('medication_name')['side_effect_rare'].apply(
-            lambda x: '/'.join(x.dropna().value_counts().nlargest(2).index))
-        filtered_df['common_side_effect_rare'] = filtered_df['medication_name'].map(rare_side_effects)
-
-        # Remove duplicates
-        filtered_df = filtered_df.drop_duplicates(subset=['disease_name', 'medication_name'])
-
-    # Ensure no empty rows are included
-    filtered_df = filtered_df.dropna(subset=['medication_name'])
-
-    return columns, filtered_df.to_dict('records'), 'multi' if treatment_type == 'medication' else None, []
-
-
-
-
-
 
 
 
