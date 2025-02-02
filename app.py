@@ -231,7 +231,7 @@ def display_selected_medications(selected_rows, data, treatment_type, disease_na
             x=med_data['side_effect'],
             y=med_data['count'],
             name=med,
-            marker_color=color_palette[i % len(color_palette)]  # Apply color from palette
+            marker_color=color_palette[i % len(color_palette)]  # apply color from palette
         ))
 
     side_effect_fig.update_layout(
