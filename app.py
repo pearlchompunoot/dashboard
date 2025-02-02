@@ -6,10 +6,10 @@ import dash_bootstrap_components as dbc
 
 
 # Read the Excel file
-df_medication = pd.read_excel('data/QBUS5010 simulation data.xlsx', sheet_name='newdata')
-df_surgery = pd.read_excel('data/QBUS5010 simulation data.xlsx', sheet_name='data_surgery')
-df_alternative = pd.read_excel('data/QBUS5010 simulation data.xlsx', sheet_name='alternative treatment')
-df_percentage = pd.read_excel('data/QBUS5010 simulation data.xlsx', sheet_name='percentage')
+df_medication = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='newdata')
+df_surgery = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='data_surgery')
+df_alternative = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='alternative treatment')
+df_percentage = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='percentage')
 
 # Initialize the Dash app
 app = Dash(external_stylesheets=[dbc.themes.CERULEAN],suppress_callback_exceptions=True)
