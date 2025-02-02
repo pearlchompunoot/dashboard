@@ -16,7 +16,7 @@ df_percentage = pd.read_excel('QBUS5010 simulation data.xlsx', sheet_name='perce
 
 # Initialize the Dash app
 app1 = dash.Dash(__name__)
-
+server = app.server
         
 #Layout
 app1.layout = html.Div([
